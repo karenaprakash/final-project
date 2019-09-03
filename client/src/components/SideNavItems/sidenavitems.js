@@ -35,6 +35,12 @@ const SideNavItems = ({user,onHideNav}) => {
             link : '/login',
             restricted : false,
             exclude : true
+        }, {
+            type : 'navItem',
+            icon : 'plus',
+            text : 'Add Reviews',
+            link : '/user/add',
+            restricted : true
         }, 
         {
             type : 'navItem',
@@ -43,13 +49,6 @@ const SideNavItems = ({user,onHideNav}) => {
             link : '/user/user-reviews',
             restricted : true
         },
-        {
-            type : 'navItem',
-            icon : 'plus',
-            text : 'Add Reviews',
-            link : '/user/add',
-            restricted : true
-        }, 
         {
             type : 'navItem',
             icon : 'sign-out',

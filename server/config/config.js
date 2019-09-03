@@ -1,7 +1,7 @@
 const config = {
     production :{
         SECRET : process.env.SECRET,
-        DATABASE : process.env.MONGODB_URI
+        DATABASE : 'mongodb://54.185.16.135:27017/booksShelf'
     },
     default : {
         SECRET : 'SUPERSECRETPASSWORD123',
@@ -12,3 +12,5 @@ const config = {
 exports.get = function get(env){
     return config[env] || config.default
 }
+
+//mongodb://rao:raoinfotech@54.185.16.135:27017/meme-generator"

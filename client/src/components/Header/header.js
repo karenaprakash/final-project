@@ -34,7 +34,7 @@ class Header extends Component {
                     onHideNav = {()=> this.onHideNav()}
                />
                         <Link to='/' className='logo'>
-                        The Book Shelf 
+                        The Book's Reviews  
                     </Link>
               
             </header>
