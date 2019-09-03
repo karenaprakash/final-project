@@ -4,7 +4,7 @@ import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 
 
-const SideNavItems = ({user}) => {
+const SideNavItems = ({user,onHideNav}) => {
 
     const items = [
         {
@@ -23,14 +23,14 @@ const SideNavItems = ({user}) => {
         },
         {
             type : 'navItem',
-            icon : 'file-text-o',
+            icon : 'users',
             text : 'Add Admins',
             link : '/user/register',
             restricted : true
         },
         {
             type : 'navItem',
-            icon : 'file-text-o',
+            icon : 'sign-in',
             text : 'Login',
             link : '/login',
             restricted : false,
@@ -38,21 +38,21 @@ const SideNavItems = ({user}) => {
         }, 
         {
             type : 'navItem',
-            icon : 'file-text-o',
+            icon : 'star',
             text : 'My Reviews',
             link : '/user/user-reviews',
             restricted : true
         },
         {
             type : 'navItem',
-            icon : 'file-text-o',
+            icon : 'plus',
             text : 'Add Reviews',
             link : '/user/add',
             restricted : true
         }, 
         {
             type : 'navItem',
-            icon : 'file-text-o',
+            icon : 'sign-out',
             text : 'Logout',
             link : '/user/logout',
             restricted : true
@@ -60,7 +60,7 @@ const SideNavItems = ({user}) => {
     ]
 
     const element = (item,i) => (
-        <div key={i} className={item.type}>
+        <div key={i} className={item.type} onClick={onHideNav}>
             <Link to={item.link}>
                     <FontAwesome name={item.icon} />
                     {item.text}
