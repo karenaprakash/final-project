@@ -7,6 +7,8 @@ import Layout from './hoc/Layout/layout';
 import Auth from './hoc/Auth/auth';
 import User from './components/Admin/user';
 import AddBook from './containers/Admin/add';
+
+import Edit from './containers/Admin/edit_review';
 import EditReview from './containers/Admin/edit';
 import UserPosts from './components/Admin/userPosts';
 import Register  from './containers/Admin/register';
@@ -20,6 +22,7 @@ const Routes = () => {
                 <Route path="/user/logout" exact component={ Auth(Logout,true) } />
                 <Route path="/user/add" exact component={ Auth(AddBook,true) } />
                 <Route path="/user/register" exact component={ Auth(Register,true) } />
+                <Route path="/user/edit/:id" exact component={ Auth(Edit,true) } />
                 <Route path="/user/edit-post/:id" exact component={ Auth(EditReview,true) } />
                 <Route path="/user" exact component={ Auth(User,true) } />
                 <Route path="/user/user-reviews" exact component={ Auth(UserPosts,true) } />

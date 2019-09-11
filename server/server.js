@@ -68,6 +68,7 @@
     /*------------- POST ------------------*/
 
     //POST METHOD : STORE BOOK IN DATABASE 
+    /*
     app.post("/api/book",(req,res)=>{
         const book = new Book(req.body);
 
@@ -79,6 +80,45 @@
             })
         })
     })
+    */
+   
+/*============ Image upload Start ===========*/
+
+/*----------- Multer -----------*/
+
+//add static public folder 
+app.use(express.static('client/public'));
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination : function( req , file , cb ){  
+        cb(null,'client/public/images');
+    },
+    filename: function( req , file , cb ){
+        cb(null,new Date().toISOString() + file.originalname);
+    }
+})
+const uploadImage = multer({storage : storage})
+
+/*============ Image upload End ===========*/
+
+    app.post("/api/book",uploadImage.single('bookImage'),(req,res)=>{
+        const book = new Book(req.body);
+        book.bookImage = req.file.filename;
+        console.log(book)
+        book.save((err,doc)=>{
+            
+            if(err) return res.json({
+                post : false
+            })
+
+            res.status(200).json({
+                post : true,
+                bookId : doc._id
+            })
+        })
+    })
+    
 
     /*------------- UPDATE ------------------*/
     

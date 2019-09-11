@@ -25,6 +25,9 @@ import { getBookWithReviewer , clearBookWithReviewer } from '../../actions';
             <div className="br_reviewer">
                 <span>Review By:</span> { books.reviewer.name } {books.reviewer.lastname}
             </div>
+            <div className="br_image">
+                     <img src={`/images/${books.book.bookImage}`} alt='product'/>
+                </div>
          </div> 
          <div className="br_review">
             {books.book.review}
