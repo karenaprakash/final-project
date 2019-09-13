@@ -144,8 +144,6 @@ renderFileInputField(field){
        
     componentDidUpdate = () => {
         const length = Object.entries(this.props.data).length;
-        console.log(length);
-        console.log(this.props)
            if(  length > 1){
             const length_of_newbook = Object.entries(this.props.data.newbook).length;
             if(length_of_newbook != 0){
