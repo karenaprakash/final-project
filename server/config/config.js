@@ -1,3 +1,6 @@
+/**
+ * main configuration file
+ */
 const config = {
     production :{
         SECRET : process.env.SECRET,
@@ -5,7 +8,7 @@ const config = {
     },
     default : {
         SECRET : 'SUPERSECRETPASSWORD123',
-        DATABASE : 'mongodb://localhost:27017/booksShelf'
+        DATABASE : 'mongodb://54.185.16.135:27017/booksShelf'
     }
 }
 

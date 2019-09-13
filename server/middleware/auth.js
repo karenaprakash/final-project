@@ -1,3 +1,6 @@
+/**
+ * auth : it authenticate user
+ */
 const  { User } = require('../models/user');
 
 let auth = (req,res,next) =>{

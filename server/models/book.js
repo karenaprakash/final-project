@@ -1,3 +1,6 @@
+/**
+ * book model
+ */
 const mongoose = require('mongoose');
 
 const bookSchema = mongoose.Schema({
