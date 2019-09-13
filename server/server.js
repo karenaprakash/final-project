@@ -122,19 +122,42 @@ const uploadImage = multer({storage : storage})
 
     /*------------- UPDATE ------------------*/
     
-    //Post Method for update book information 
-    app.post("/api/book_update",(req,res)=>{
-        Book.findByIdAndUpdate(req.body._id,req.body,{new:true},(err,doc)=>{
+    //Post Method for update book with image information 
+    app.post("/api/book_with_img_update",uploadImage.single('bookImage'),(req,res)=>{
+        const book_updated = new Book(req.body);
+        book_updated.bookImage = req.file.filename;
+       
+        Book.findByIdAndUpdate(book_updated._id,book_updated,{new:true},(err,doc)=>{
+            console.log(doc)
             if(err) return res.status(400).send(err);
             res.json({
                 success : true,
-                doc 
+                doc  
             })
         })
-
     })
+ //Post Method for update book without image information 
+ app.post("/api/book_without_img_update",(req,res)=>{
+    const book_updated = new Book(req.body);
+    console.log(book_updated)
+    console.log(req.body)
 
-    /*------------- DELETE ------------------*/
+    Book.findByIdAndUpdate(book_updated._id,{$set:book_updated},{ new : true },(err,doc)=>{
+        if(err) return res.status(400).send(err);
+        res.json({
+            success : true,
+            doc  
+        })
+    })
+})
+/*
+Book.findByIdAndUpdate("5d6e4c837bbc7f5906069bcf",{$set:{name : "Farrari"}},{ new : true },(err,doc)=>{
+    if(err) return res.status(400).send(err);
+    console.log(doc)
+   
+})
+*/    
+/*------------- DELETE ------------------*/
 
     //delete method for delete book 
 

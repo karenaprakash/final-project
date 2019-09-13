@@ -1,4 +1,9 @@
-    import React, { Component } from 'react';
+   /**
+    * home_container : component for home 
+    * it is conected with redux store
+    * 
+    */
+   import React, { Component } from 'react';
     import { connect } from 'react-redux';
     import { getBooks } from '../actions';
     import BookItem from '../widgetsUI/book_item';
@@ -7,7 +12,7 @@
     class HomeContainer extends Component {
 
         componentWillMount(){
-            this.props.dispatch(getBooks(1,0,'desc'))
+            this.props.dispatch(getBooks(5,0,'desc'))
         }
 
         renderItems = (books) => (
@@ -20,7 +25,7 @@
 
         loadmore = () => {
             const count = this.props.books.list.length;
-            this.props.dispatch(getBooks(2,count,'desc',this.props.books.list))
+            this.props.dispatch(getBooks(5,count,'desc',this.props.books.list))
         }
 
         render() {

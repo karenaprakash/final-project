@@ -1,5 +1,8 @@
+/**
+ *  actions : all actions which are used in this project
+ */
 import axios from 'axios';
-
+//getBooks : get all books
 export function getBooks(
     limit = 10,
     start = 0,
@@ -7,7 +10,6 @@ export function getBooks(
     list = ''
 
 ){
-
     const request = axios.get(`/api/getBooks?limit=${limit}&skip=${start}&order=${order}`)
                     .then( response => {
                         if(list){
@@ -23,7 +25,7 @@ export function getBooks(
         payload : request 
     }
 }
-
+//getBookWithReviewer
 export function getBookWithReviewer(id){
   
     const request = axios.get(`/api/getBook?id=${id}`)
@@ -50,7 +52,7 @@ export function getBookWithReviewer(id){
     }
 
 }
-
+//clearBookWithReviewer : clear book used when we go inside perticuler book and come outside  
 export function clearBookWithReviewer(){
         return{
             type : 'CLEAR_BOOK_W_REVIEWER',
@@ -62,7 +64,7 @@ export function clearBookWithReviewer(){
 }
 
 
-
+//addBook : add book action
 export function addBook(book){
     const request = axios.post('/api/book',book)
                     .then(response => response.data);
@@ -72,7 +74,7 @@ export function addBook(book){
                         payload : request
                     }
 }
-
+//clearNewBook : clear new book in add review page 
 export function clearNewBook(){
     return{
         type : 'CLEAR_NEWBOOK',
@@ -80,7 +82,7 @@ export function clearNewBook(){
     }
 }
 
-
+//getUserPosts : get user's all post
 export function getUserPosts(userId){
     const request = axios.get(`/api/user_posts?id=${userId}`)
                     .then(response => response.data)
@@ -90,7 +92,7 @@ export function getUserPosts(userId){
     }
 }
 
-
+//getBook 
 export function getBook(id){
     const request = axios.get(`/api/getBook?id=${id}`)
                     .then(response => response.data)    
@@ -99,16 +101,26 @@ export function getBook(id){
             payload : request
         }
 }
-
-export function updateBook(data){
-    const request = axios.post(`/api/book_update`,data)
+//updateBook_with_image
+export function updateBook_with_image(data){
+    const request = axios.post(`/api/book_with_img_update`,data)
                      .then(response => response.data)    
     return{
-        type : 'UPDATE_BOOK',   
+        type : 'UPDATE_BOOK_WITH_IMG',   
         payload : request
     }
 }
 
+//updateBook_without_image
+export function updateBook_without_image(data){
+    const request = axios.post(`/api/book_without_img_update`,data)
+                     .then(response => response.data)    
+    return{
+        type : 'UPDATE_BOOK_WITHOUT_IMG',   
+        payload : request
+    }
+}
+//deleteBook
 export function deleteBook(id){
     const request = axios.delete(`/api/delete_book?id=${id}`)
                     .then(response => response.data)
@@ -119,7 +131,7 @@ export function deleteBook(id){
                     }
 
 }
-
+//clearBook
 export function clearBook(){
     return {
         type : 'CLEAR_BOOK',
@@ -131,8 +143,8 @@ export function clearBook(){
     }
 }
 
-/*========== USER ============*/
-
+/*========== USER : actions related to user ============*/
+//loginUser : for login
 export function loginUser({email,password}){
     const request = axios.post("/api/login",{email,password})
                     .then(response => response.data )
@@ -142,7 +154,7 @@ export function loginUser({email,password}){
         payload : request
      }
 }
-
+//auth : for authentication
 export function   auth(){
    const request = axios.get('/api/auth')
                     .then(response => response.data);
@@ -152,19 +164,17 @@ export function   auth(){
         payload : request
     }
 }
-
+//getUsers : get all users
 export function getUsers(){
     const request = axios.get('/api/users')
                     .then(response => response.data)
-
-
     return {
         type : 'GET_USER',
         payload : request
     }
 
 }
-
+//userRegister : add new user
 export function userRegister(user,userList){
     const request = axios.post('/api/register',user)
     

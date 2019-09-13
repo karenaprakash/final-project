@@ -1,3 +1,7 @@
+/**
+ * auth.js : it handles user is authenticated or not
+ * 
+ */
 import React, { Component } from 'react';
 import { auth } from '../../actions'
 import { connect } from 'react-redux';

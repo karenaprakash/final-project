@@ -1,3 +1,7 @@
+/**
+ * sidenav : side navbar
+ * 
+ */
 import React from 'react';
 import SideNav from 'react-simple-sidenav';
 import SideNavItems from '../SideNavItems/sidenavitems';

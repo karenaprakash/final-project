@@ -1,3 +1,7 @@
+/**
+ * edit_review.js : edit review page using simple react 
+ * Not used in this project
+ */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -57,6 +61,7 @@ class EditBook extends PureComponent {
 
     componentWillReceiveProps(nextProps){
         let book = nextProps.books.book;
+        console.log(nextProps)
         this.setState({
             formData:{
                 _id : book._id,
@@ -72,6 +77,7 @@ class EditBook extends PureComponent {
 
     render() {
         let books = this.props.books;
+        console.log(books)
         return (
             <div className="rl_container article">
 
@@ -145,7 +151,7 @@ class EditBook extends PureComponent {
 
                         />
                     </div>
-                    <button type="submit">Edit  Review</button>
+                   <button type="submit">Edit  Review</button>
                    <div className="delete_post">
                             <div className="button"
                                 onClick={this.deletePost}

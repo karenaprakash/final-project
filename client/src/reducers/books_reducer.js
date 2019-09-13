@@ -1,3 +1,8 @@
+/**
+ * 
+ * books_reducer : which containe all reducers related to book
+ *  
+ */
 export default function(state={},action){
     switch(action.type){
         case 'GET_BOOKS':
@@ -24,19 +29,26 @@ export default function(state={},action){
         return{
             ...state,newbook : action.payload
         }
-        case 'UPDATE_BOOK':
+        case 'UPDATE_BOOK_WITH_IMG':
         return{
             ...state,
             updateBook : action.payload.success,
             book:action.payload.doc
         }
+        case 'UPDATE_BOOK_WITHOUT_IMG':
+            return{
+                ...state,
+                updateBook : action.payload.success,
+                book:action.payload.doc
+            }
         case 'DELETE_BOOK':
         return{
             ...state,postDeleted : action.payload
         }
         case 'CLEAR_BOOK':
         return{
-            ...state,updateBook : action.payload.updateBook,
+            ...state,
+            updateBook : action.payload.updateBook,
             book : action.payload.book,
             postDeleted : action.payload.postDeleted
         }

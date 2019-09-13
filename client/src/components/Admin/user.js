@@ -1,3 +1,7 @@
+   /**
+    * user.js : user profile page 
+    * 
+    */
 import React from 'react';
 
 const User = (props) => {

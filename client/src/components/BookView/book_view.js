@@ -1,3 +1,8 @@
+   /**
+    * book_view : only perticuler book view component 
+    * http://localhost:3000/books/id
+    * 
+    */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -26,8 +31,8 @@ import { getBookWithReviewer , clearBookWithReviewer } from '../../actions';
                 <span>Review By:</span> { books.reviewer.name } {books.reviewer.lastname}
             </div>
             <div className="br_image">
-                     <img src={`/images/${books.book.bookImage}`} alt='product'/>
-                </div>
+                    <img src={`/images/${books.book.bookImage}`} alt='book'/>
+            </div>
          </div> 
          <div className="br_review">
             {books.book.review}

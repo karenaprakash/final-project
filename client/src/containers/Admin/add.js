@@ -35,6 +35,7 @@ class AddBook extends Component {
 
 /*------- renderFileInputField  --------*/
 handleFileChange = (event) => {
+    
      if(event.target.file){
         this.setState({
             bookImage : event.target.files[0].name
@@ -43,6 +44,7 @@ handleFileChange = (event) => {
 }
 
 renderFileInputField(field){
+    console.log(field)
     const className = `form-input ${field.meta.touched && field.meta.error ? 'has-error':''}`;
     return (
         <div className={className}>
@@ -143,6 +145,7 @@ renderFileInputField(field){
     componentDidUpdate = () => {
         const length = Object.entries(this.props.data).length;
         console.log(length);
+        console.log(this.props)
            if( length != 0 ){
             const length_of_newbook = Object.entries(this.props.data.newbook).length;
             if(length_of_newbook != 0){

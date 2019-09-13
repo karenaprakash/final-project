@@ -1,3 +1,6 @@
+   /**
+    * logout : component for logout
+    */
 import React from 'react';
 import axios from 'axios';
 

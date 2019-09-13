@@ -1,3 +1,7 @@
+/**
+ * addbook.js : add new book page using simple react 
+ * Not used in this project 
+ */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';

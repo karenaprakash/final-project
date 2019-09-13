@@ -1,3 +1,4 @@
+//run defferent ports for website and api server 
 const proxy = require('http-proxy-middleware');
 
 module.exports = function(app) {

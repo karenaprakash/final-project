@@ -1,3 +1,7 @@
+/**
+ * edit.js : edit review page
+ * 
+ */
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -5,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 /*------- action which all data to data base --------*/
-import { getBook , updateBook , clearBook , deleteBook } from '../../actions';
+import { getBook , updateBook_with_image , updateBook_without_image , clearBook , deleteBook } from '../../actions';
 
 /*------- redux form --------*/
 import { Field, reduxForm } from 'redux-form';
@@ -15,68 +19,29 @@ import book_view from '../../components/BookView/book_view';
 class EditBook extends PureComponent {
 
     state = {
-        formData:{
-            _id : this.props.match.params.id,
-            name : '',
-            author : '',
-            review : '',
-            pages : '',
-            rating : '',
-            price : '',
-            bookImage : ''
+        formData : {
+            bookImage : '',
+            isBookSelected : false
         },
-        book_value : {
-            _id : this.props.match.params.id,
-            name : '',
-            author : '',
-            review : '',
-            pages : '',
-            rating : '',
-            price : '',
-            bookImage : ''
-        }
+        isFormChanged : null
     }
 
-    submitForm = (event) => {
-        event.preventDefault();
-        console.log(event)
-      // this.props.dispatch(updateBook(this.state.formData))
-    }
+    
 
     deletePost = () => {
         this.props.dispatch(deleteBook(this.props.match.params.id))
+        window.scrollTo(0, 0);
     }
 
     redirectUser = () => {
         setTimeout (()=>{
             this.props.history.push('/user/user-reviews')
         },1000)
-
     }
 
     componentWillMount(){
+        console.log(this.state.isFormChanged)
         this.props.dispatch(getBook(this.props.match.params.id))
-       
-        let book = this.props.books[0];
-        console.log(book)
-        this.setState({
-            book_value :  {
-                _id : book._id,
-                name : book.name,
-                author : book.author,
-                review : book.review,
-                pages : book.pages,
-                rating : book.rating,
-                price : book.price,
-                bookImage : book.bookImage
-            }
-        })
-
-        console.log(this.state.book_value)
-
-
-
-
     }
 
     componentWillUnmount(){
@@ -84,13 +49,7 @@ class EditBook extends PureComponent {
     }
     
   
-
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps.books[0])
-       
-        
-       
-    }
+   
 
     //PRISTINE / DIRTY // TOUCHED / ERROR : events in redux-form 
 
@@ -113,19 +72,17 @@ class EditBook extends PureComponent {
 
 /*------- renderFileInputField  --------*/
 handleFileChange = (event) => {
-     if(event.target.file){ 
+     if(event.target.files.length === 1){ 
         this.setState({
            formData : {
-                bookImage : event.target.files[0].name
+                bookImage : event.target.files[0].name,
+                isBookSelected : true
             } 
         })
      } 
-    
-
 }
 
 renderFileInputField(field){
-    console.log(field)
     const className = `form-input ${field.meta.touched && field.meta.error ? 'has-error':''}`;
     return (
         <div className={className}>
@@ -133,6 +90,7 @@ renderFileInputField(field){
             <input 
             type="file"   
             onChange = {field.input.onChange} 
+           
             />
             <div className="error">
                 {field.meta.touched ? field.meta.error:''}
@@ -199,11 +157,57 @@ renderFileInputField(field){
         )
     }
 
+    submitForm = (values) => {
+
+        if(this.props.initialValues != null && values != null){
+           if( JSON.stringify(this.props.initialValues) === JSON.stringify(values) ){
+            this.setState({
+                isFormChanged : false
+             }) 
+             window.scrollTo(0, 0);
+             return           
+             //console.log('f')
+           }else{
+             this.setState({
+                isFormChanged : true
+             })
+             console.log('t')
+           }
+        }
+        
+
+
+
+        let formData = new FormData();
+        formData.append('name', values.name)
+        formData.append('_id', this.props.match.params.id)
+        formData.append('author', values.author)
+        formData.append('review',  values.review)
+        formData.append('pages', values.pages)  
+        formData.append('price', values.price)  
+        formData.append('rating', values.rating)
+        formData.append( 'ownerId' , this.props.user.login.id )
+        if(this.state.formData.isBookSelected){
+            if (typeof values.bookImage !== 'string' && values.bookImage !== null) {
+                formData.append('bookImage', values.bookImage[0]);
+            }else{
+
+            }
+            this.props.dispatch(updateBook_with_image(formData))  
+        }else{
+            console.log(values)
+            this.props.dispatch(updateBook_without_image(values))              
+        } 
+      
+    }
+
     render() {
 
-        let books = this.props.books[0];
-
-        console.log(this.props)
+        let book = this.props.book;
+       
+        const length = Object.entries(book).length;
+     
+        console.log(this.state.isFormChanged)
         return (
                     <div className="Form">
                         <div className="top">
@@ -212,21 +216,29 @@ renderFileInputField(field){
                         </div>
 
                         {
-                            books.updateBook ? 
+                            book.updateBook ? 
                                 <div className="edit_confirm">
                                     post updated, 
-                                    <Link to={`/books/${books.book._id}`}>
+                                    <Link to={`/books/${book.book._id}`}>
                                         click here to see post 
                                     </Link>
                                 </div>
                             : null
                         }
                         {
-                            books.postDeleted ? 
+                            book.postDeleted ? 
                             <div className="red_tag">Post Deleted
                                 {this.redirectUser()}
                             </div>
                             :null
+                        }
+                         {
+                            !this.state.isFormChanged && this.state.isFormChanged !== null? 
+                            <div className="edit_confirm">
+                            Please Make Some Changes.
+                            </div>
+                            :
+                            null
                         }
               
                         <form onSubmit={this.props.handleSubmit((event)=>this.submitForm(event))} method="POST" encType="multipart/form-data">
@@ -264,7 +276,6 @@ renderFileInputField(field){
                             <Field
                                 myLabel="Select Rating"                    
                                 name="rating"
-                                
                                 component={this.renderSelectField}>
                                 <option></option>
                                 <option value='1'>1</option>
@@ -273,17 +284,25 @@ renderFileInputField(field){
                                 <option value='4'>4</option>
                                 <option value='5'>5</option>
                             </Field>
-        
                             <Field 
                             myLabel="Select Book Image"                                        
                             name="bookImage"
-                            value={this.state.formData.bookImage}
+                            value={this.state.formData.bookImage}                      
                             type="file"
                             onChange={this.handleFileChange}
                             component={this.renderFileInputField}
                             />
-{/*
-                            <button type="submit">Edit  Review</button>
+                            {
+                                length == 0 || book.book == null ? null :
+                                <div className="br_image">
+                                    <img src={`/images/${book.book.bookImage}`} alt='product'/>
+                                </div>
+                            }
+                          
+                          <div className="delete_post">
+                                <button type="submit">Edit  Review</button>
+                        </div>
+                            
                             <div className="delete_post">
                                         <div className="button"
                                             onClick={this.deletePost}
@@ -291,7 +310,7 @@ renderFileInputField(field){
                                             Delete Review
                                         </div>
                             </div>
-*/}
+
                         </form>
                     </div>
               )
@@ -341,29 +360,55 @@ function validate(values){
  */
      
  
-     if(!values.bookImage || values.bookImage.length == 0 ){
+     if(!values.bookImage || values.bookImage.length == 0 || values.bookImage ==null){
          errors.bookImage = "The bookImage is empty"
      }
  
      return errors;
  }
+
+
+  /*
+    componentWillReceiveProps(nextProps){
+        const length = Object.entries(nextProps.book).length;
+        
+        if(length != 0){
+            const book = nextProps.book.book;
+            console.log(book)
+            this.setState({
+                formData : {
+                    bookImage : book.bookImage,
+                    isBookSelected : false
+                }
+            })
+        }
+       
+    }
+    */
      /*------- it returns messages when action is called and state going to change  --------*/
  
  function mapStateToProps(state){
-     console.log(state)
-    const book = state.books.list[0]
-    const book_value =  {
-        _id : book._id,
-        name : book.name,
-        author : book.author,
-        review : book.review,
-        pages : book.pages,
-        rating : book.rating,
-        price : book.price,
-        bookImage : book.bookImage
+   
+
+    const books = state.books
+    let book_value = {}
+    const length = Object.entries(books).length;
+    if( length != 0 && typeof(books.book) === "object" && books.book != null ){
+        const book = state.books.book
+        book_value =  {
+            _id : book._id,
+            name : book.name,
+            author : book.author,
+            review : book.review,
+            pages : book.pages,
+            rating : book.rating,
+            price : book.price,
+            bookImage : book.bookImage
+        }
     }
+    
      return {
-         books: state.books.list,
+         book: state.books,
          initialValues : book_value,
      }
  }
@@ -379,7 +424,7 @@ function validate(values){
  )
 */
 
- export default connect( mapStateToProps, { getBook , updateBook , clearBook , deleteBook  })(
+ export default connect( mapStateToProps, { getBook , updateBook_with_image , updateBook_without_image  , clearBook , deleteBook  })(
     reduxForm({
         validate,
         form: 'EditReview',

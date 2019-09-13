@@ -1,3 +1,8 @@
+   /**
+    * userPosts : all reviews related to login user 
+    * My Reviews page
+    * 
+    */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserPosts } from '../../actions';

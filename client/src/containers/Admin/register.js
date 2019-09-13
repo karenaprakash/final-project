@@ -1,3 +1,7 @@
+/**
+ * Add.js : add new user page 
+ * 
+ */
 import React, { PureComponent } from 'react';
 import {  connect } from 'react-redux';
 import { getUsers , userRegister } from '../../actions';
