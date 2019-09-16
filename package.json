@@ -11,7 +11,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
-    "node": "8.12.0"
+    "node": "8.12.0",
+    "npm" : "6.10.2"
   },
   "author": "",
   "license": "ISC",
