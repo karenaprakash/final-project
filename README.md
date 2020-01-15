@@ -2,11 +2,9 @@
 
 ## CRUD with mongodb 
 
-### react + node + mongodb
+### react + node + mongodb + upload image (multer)
 
-step 1: 
-
-git clone https://github.com/karenaprakash/final-project.git
+step 1: git clone https://github.com/karenaprakash/final-project.git
 
 step 2 : do npm install in root directory as well as in client folder 
 
